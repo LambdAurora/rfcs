@@ -5,23 +5,22 @@ This RFC proposes a possible standardized way to synchronize feature toggles (bo
 
 ## Motivation
 
-Currently there is no easy way for developers to implement feature toggles unless they are using the custom payload packets directly with the networking API which requires more work.
+Currently, there are no convenient methods to implement toggleable features without using tedious custom payload packets.
 
-The drawbacks of developers using non-standardized protocols is the impossibility to write a common server mod to disable some features in some mods. This aims to reduce work to multiple different parties.
+However, it is impossible to write a common server mod to disable certain features in mods. This RFC aims to standardize client-server feature control.
 
 
 ## Explanation
 
-### How would this work?
+### Details
 
-The idea behind this RFC is for mod developers there would be an API for which mods can register a feature, for a given feature you can set a client value (from the client config), and query if the feature is enabled or not (by checking if the server allows it then it returns the client value, else it returns false).  
-Each features are identified by an ID.  
-Servers can send a packet changing the values of those features by ID.  
-When a client joins a server it would send a or multiple packet(s) describing which features exist on the client.
+The idea is to create an API for mods to register features with, so servers can explicitly disable said features enabled on clients.
 
-Mods can set whether the server must explicitely authorize the features to enable it, or explicitely disallow the features to disable it.
+When a client joins a server, it sends a packet that describes what features are available.
 
-### Networking specification
+Mods can ask the server to authorize features or disable them entirely.
+
+### Networking Specification
 
 To standardize this feature toggle system it needs a standardized networking specification so anyone can re-implement it with a custom API for different modding platforms (Spigot, Sponge, Forge, etc).
 
